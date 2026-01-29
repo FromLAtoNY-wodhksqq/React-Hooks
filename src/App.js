@@ -18,7 +18,7 @@ function App() {
     };
     return (
       <div>
-        <span>현제 시각:{time}시</span>
+        <span>현재 시각:{time}시</span>
         <button onClick={handleClick}>Update</button>
       </div>
   );
