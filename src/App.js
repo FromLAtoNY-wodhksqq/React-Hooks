@@ -1,26 +1,57 @@
 import logo from './logo.svg';
 import './App.css';
-import {useState} from "react";
+import React,{useState,useEffect} from "react";
 
 
 function App() {
-    const[time,setTime] = useState(1);
+    const[hour,setHour] = useState(0);
+    const[minute,setMinute] = useState(0);
+    const[message,setMessage] = useState("");
 
-    const handleClick = (e) => {
-        let newTime;
-        if(time >=23){
-            newTime = 0;
+    useEffect(() => {
+        setMessage("Time changed!!");
+
+        const timer = setTimeout(() => {
+            setMessage("");
+        }, 1000);
+
+        return () => clearTimeout(timer);
+    }, [hour, minute]);
+
+    const hourChange = (e) => {
+        let newHour;
+
+        if(hour >=23){
+            newHour = 0;
+        }
+        else {
+            newHour = hour + 1;
+        }
+
+        setHour(newHour);
+
+    };
+
+    const minuteChanged=()=>{
+        let newMinute;
+
+        if(minute >=59){
+            newMinute = 0;
         }
         else{
-            newTime = time+1;
+            newMinute = minute+1;
         }
-        setTime(newTime);
-    };
+
+        setMinute(newMinute);
+    }
     return (
       <div>
-        <span>현재 시각:{time}시</span>
-        <button onClick={handleClick}>Update</button>
+        <span>현재 시각:{hour}시 {minute}분</span>
+        <button onClick={hourChange}>Hour</button>
+            <button onClick={minuteChanged}>Minute</button>
+          <div>{message}</div>
       </div>
+
   );
 }
 
