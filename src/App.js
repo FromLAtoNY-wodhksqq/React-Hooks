@@ -1,14 +1,16 @@
 import logo from './logo.svg';
 import './App.css';
-import React,{useState,useEffect} from "react";
+import React,{useState,useEffect,useRef} from "react";
 
 
 function App() {
     const[hour,setHour] = useState(0);
     const[minute,setMinute] = useState(0);
     const[message,setMessage] = useState("");
+    const renderCount=useRef(0);
 
     useEffect(() => {
+        renderCount.current = renderCount.current+1;
         setMessage("Time changed!!");
 
         const timer = setTimeout(() => {
@@ -50,6 +52,7 @@ function App() {
         <button onClick={hourChange}>Hour</button>
             <button onClick={minuteChanged}>Minute</button>
           <div>{message}</div>
+          <div>랜더링 횟수: {renderCount.current}</div>
       </div>
 
   );
