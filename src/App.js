@@ -1,13 +1,13 @@
 
 import logo from './logo.svg';
 import './App.css';
-import React,{useState,useEffect,useRef,useContext,useMemo} from "react";
+import React, {useState, useEffect, useRef, useContext, useMemo, useCallback} from "react";
 
 function App() {
     const [a, setA] = useState(10);
     const [b, setB] = useState(20);
 
-    const sum= useMemo(() => {
+    const sum=useCallback(()=>{
         return a + b;
     }, [a, b]);
 
