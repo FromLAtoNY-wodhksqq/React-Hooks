@@ -1,8 +1,20 @@
+
 import logo from './logo.svg';
 import './App.css';
-import React,{useState,useEffect,useRef} from "react";
+import React,{useState,useEffect,useRef,useContext} from "react";
+import Page from "./a/Page";
+import {UserContext} from "./b/UserContext";
+
+function App(){
+    return(<UserContext.Provider value={"최재완"}>
+        <Page/>
+    </UserContext.Provider>)
+}
+export default App;
 
 
+
+/*
 function App() {
     const[hour,setHour] = useState(0);
     const[minute,setMinute] = useState(0);
@@ -59,3 +71,4 @@ function App() {
 }
 
 export default App;
+*/
