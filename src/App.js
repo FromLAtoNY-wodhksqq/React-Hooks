@@ -1,74 +1,29 @@
 
 import logo from './logo.svg';
 import './App.css';
-import React,{useState,useEffect,useRef,useContext} from "react";
-import Page from "./a/Page";
-import {UserContext} from "./b/UserContext";
+import React,{useState,useEffect,useRef,useContext,useMemo} from "react";
 
-function App(){
-    return(<UserContext.Provider value={"최재완"}>
-        <Page/>
-    </UserContext.Provider>)
-}
-export default App;
-
-
-
-/*
 function App() {
-    const[hour,setHour] = useState(0);
-    const[minute,setMinute] = useState(0);
-    const[message,setMessage] = useState("");
-    const renderCount=useRef(0);
+    const [a, setA] = useState(10);
+    const [b, setB] = useState(20);
 
-    useEffect(() => {
-        renderCount.current = renderCount.current+1;
-        setMessage("Time changed!!");
+    const sum= useMemo(() => {
+        return a + b;
+    }, [a, b]);
 
-        const timer = setTimeout(() => {
-            setMessage("");
-        }, 1000);
+    const sub = a - b;
 
-        return () => clearTimeout(timer);
-    }, [hour, minute]);
-
-    const hourChange = (e) => {
-        let newHour;
-
-        if(hour >=23){
-            newHour = 0;
-        }
-        else {
-            newHour = hour + 1;
-        }
-
-        setHour(newHour);
-
-    };
-
-    const minuteChanged=()=>{
-        let newMinute;
-
-        if(minute >=59){
-            newMinute = 0;
-        }
-        else{
-            newMinute = minute+1;
-        }
-
-        setMinute(newMinute);
-    }
     return (
-      <div>
-        <span>현재 시각:{hour}시 {minute}분</span>
-        <button onClick={hourChange}>Hour</button>
-            <button onClick={minuteChanged}>Minute</button>
-          <div>{message}</div>
-          <div>랜더링 횟수: {renderCount.current}</div>
-      </div>
+        <div>
+            <h1>a: {a}</h1>
+            <h1>b: {b}</h1>
+            <h1>Sum: {sum}</h1>
+            <h1>Sub: {sub}</h1>
 
-  );
+            <button onClick={() => setA(a + 1)}>a 증가</button>
+            <button onClick={() => setB(b + 1)}>b 증가</button>
+        </div>
+    );
 }
 
 export default App;
-*/
