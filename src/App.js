@@ -1,19 +1,28 @@
 import logo from './logo.svg';
 import './App.css';
-import React, {useState, useEffect, useRef, useContext, useMemo, useCallback,useReducer,useId,useLayoutEffect,useTransition,useDeferredValue} from "react";
+import React, {useState, useEffect, useRef, useContext, useMemo, useCallback,useReducer,useId,useLayoutEffect,useTransition,useDeferredValue,useImperativeHandle} from "react";
+
+const Input = forwardRef((props, ref) => {
+    const inputRef = useRef();
+
+    useImperativeHandle(ref, () => ({
+        focus() {
+            inputRef.current.focus();
+        }
+    }));
+
+    return <input ref={inputRef} />;
+});
 
 function App() {
-    const [text, setText] = useState("");
-    const deferredText = useDeferredValue(text);
+    const ref = useRef();
 
     return (
         <div>
-            <input
-                value={text}
-                onChange={e => setText(e.target.value)}
-            />
-            <p>즉시 값: {text}</p>
-            <p>지연 값: {deferredText}</p>
+            <Input ref={ref} />
+            <button onClick={() => ref.current.focus()}>
+                포커스
+            </button>
         </div>
     );
 }
