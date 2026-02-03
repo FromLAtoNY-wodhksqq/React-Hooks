@@ -1,57 +1,26 @@
 import logo from './logo.svg';
 import './App.css';
-import React, {useState, useEffect, useRef, useContext, useMemo, useCallback,useReducer,useId,useLayoutEffect} from "react";
+import React, {useState, useEffect, useRef, useContext, useMemo, useCallback,useReducer,useId,useLayoutEffect,useOptimistic} from "react";
 
-function App() {
-    const[hour,setHour] = useState(0);
-    const[minute,setMinute] = useState(0);
-    const[message,setMessage] = useState("");
 
-    useLayoutEffect(() => {
-        setMessage("Time changed!!");
+export default function App({ likes = 0 }) {
+    const [optimisticLikes, addLike] = useOptimistic(
+        likes,
+        (state) => state + 1
+    );
 
-        const timer = setTimeout(() => {
-            setMessage("");
-        }, 1000);
-
-        return () => clearTimeout(timer);
-    }, [hour, minute]);
-
-    const hourChange = (e) => {
-        let newHour;
-
-        if(hour >=23){
-            newHour = 0;
+    async function handleLike() {
+        addLike();
+        try {
+            await fetch("/api/like", { method: "POST" });
+        } catch (e) {
+            console.error("좋아요 실패");
         }
-        else {
-            newHour = hour + 1;
-        }
-
-        setHour(newHour);
-
-    };
-
-    const minuteChanged=()=>{
-        let newMinute;
-
-        if(minute >=59){
-            newMinute = 0;
-        }
-        else{
-            newMinute = minute+1;
-        }
-
-        setMinute(newMinute);
     }
-    return (
-        <div>
-            <span>현재 시각:{hour}시 {minute}분</span>
-            <button onClick={hourChange}>Hour</button>
-            <button onClick={minuteChanged}>Minute</button>
-            <div>{message}</div>
-        </div>
 
+    return (
+        <button onClick={handleLike}>
+            ❤️ {optimisticLikes}
+        </button>
     );
 }
-
-export default App;
